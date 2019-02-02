@@ -47,7 +47,8 @@ class Login extends Component {
     }
   }
 
-  checkPopup() {
+  checkPopup = () => {
+    console.log("checkpopUP..")
     const check = setInterval(() => {
       const { popup } = this
       if (!popup || popup.closed || popup.closed === undefined) {
@@ -75,7 +76,8 @@ class Login extends Component {
   startAuth = (e) => {
     if (!this.state.disabled) {
       e.preventDefault()
-      this.popup = this.openPopup()  
+      this.popup = this.openPopup()
+      console.log("checking popup..")  
       this.checkPopup()
       this.setState({disabled: 'disabled'})
     }
