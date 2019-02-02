@@ -17,6 +17,9 @@ const OAuth = require('./passportOAuth')
 
 const app = express();
 
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, 'frontend/build')))
+
 // Setup for passport and to accept JSON objects
 app.use(express.json());
 app.use(passport.initialize());
