@@ -19,8 +19,9 @@ const twitch = (req, res) => {
       token: req.user.token
     }
     console.log("call back response:", user)
-    console.log("io>>",io, "socketid>>",req.session.socketId)
+    console.log("socketid>>",req.session.socketId)
     io.in(req.session.socketId).emit('twitch', user)
+    console.log("server finished......")
 }
 
 
