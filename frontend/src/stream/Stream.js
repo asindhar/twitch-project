@@ -16,18 +16,19 @@ class Stream extends Component {
         const script = document.createElement("script");
         script.src = 'https://embed.twitch.tv/embed/v1.js';
         script.async = true;
-        script.addEventListener('load', () => {
-            new window.Twitch.Embed(this.props.targetID, { ...this.props, ...this.state });
-        });
-        document.body.appendChild(script);
-        
         axios.get('https://api.twitch.tv/helix/users',
                 {
                     params: {login: favChannel},
                     headers: {'Client-ID': 'mgk2vzz8rmegam2b8dkesjdhje4fbo'}
                 })
             .then( res => {
-                console.log(res);
+                this.setState({channel: favChannel},
+                    () => {
+                         script.addEventListener('load', () => {
+                                        new window.Twitch.Embed(this.props.targetID, { ...this.props, ...this.state });
+                                    });
+                                    document.body.appendChild(script);
+                    });
                 const channelID = res.data.data[0].id;
                 axios.get(`https://api.twitch.tv/kraken/channels/${channelID}/videos`,
                     {
@@ -38,17 +39,20 @@ class Stream extends Component {
                                 }
                     })
                     .then( res => {
-                        console.log(res);
                         //Get array of recent videos
-                        this.setState({recentStreams:res.data.videos, loading:false});
+                        this.setState({recentStreams:res.data.videos, loading:false, channel: favChannel},
+                                        () => {
+                                           
+                                        });
                     })
-                    .catch( err => {
+                    .catch( err => {    
                         console.log(err);
                     });
             })
             .catch( err => {
                 console.log(err);
             });
+        
 
     }
 

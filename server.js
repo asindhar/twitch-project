@@ -13,7 +13,7 @@ const path = require('path')
 
 //set default port
 const port = process.env.PORT || 8080;
-const index = require('./routes/index')
+const routes = require('./routes')
 const OAuth = require('./passportOAuth')
 
 const app = express();
@@ -41,7 +41,7 @@ const server = http.createServer(app);
 const io = socketio(server);
 app.set('io', io);
 
-app.use('/',index);
+app.use('/',routes);
 
 
 server.listen(port, () => {

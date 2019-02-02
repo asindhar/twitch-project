@@ -22,16 +22,16 @@ class Login extends Component {
 
   componentDidMount(){
     console.log("Component mounted..")
-    if(sessionStorage.sessionData){
-      let userData = JSON.parse(sessionStorage.userData);
-      console.log(userData)
-      this.setState({
-        user: userData,
-        token: userData.token,
-        authenticated: true
-      })
-      console.log(sessionStorage.userData.name)
-    } else {
+    // if(sessionStorage.sessionData){
+    //   let userData = JSON.parse(sessionStorage.userData);
+    //   console.log(userData)
+    //   this.setState({
+    //     user: userData,
+    //     token: userData.token,
+    //     authenticated: true
+    //   })
+    //   console.log(sessionStorage.userData.name)
+    // } else {
       socket.on(provider, userData => {
         console.log("User data from Backend", userData);
         this.popup.close();
@@ -44,7 +44,7 @@ class Login extends Component {
         window.sessionStorage.setItem("sessionData", true)
         window.sessionStorage.setItem("userData", JSON.stringify(userData));
       });
-    }
+    //}
   }
 
   checkPopup = () => {
@@ -114,7 +114,7 @@ class Login extends Component {
                 <input value={channel} onChange={(e) => this.updateChannel(e) }/> 
                 <Link to={
                   {
-                    pathname: '/user',
+                    pathname: '/stream',
                     state: {channel: channel}
                   }
                   }>
