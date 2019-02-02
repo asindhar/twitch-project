@@ -41,7 +41,7 @@ const server = http.createServer(app);
 const io = socketio(server);
 app.set('io', io);
 
-//app.use('/',index);
+app.use('/',index);
 
 
 server.listen(port, () => {
