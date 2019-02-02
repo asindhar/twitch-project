@@ -9,7 +9,7 @@ class App extends Component {
     return(
       <Switch>
         <Route exact path='/' component={Login}/>
-        <Route exact path='/user' component={Stream}/>
+        <Route exact path='/stream' component={Stream}/>
       </Switch>
     );
   }

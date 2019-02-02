@@ -18,6 +18,7 @@ const twitch = (req, res) => {
       photo: req.user.photo,
       token: req.user.token
     }
+    console.log("call back response:", user)
     io.in(req.session.socketId).emit('twitch', user)
 }
 

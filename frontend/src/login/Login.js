@@ -21,6 +21,7 @@ class Login extends Component {
   }
 
   componentDidMount(){
+    console.log("Component mounted..")
     if(sessionStorage.sessionData){
       let userData = JSON.parse(sessionStorage.userData);
       console.log(userData)
