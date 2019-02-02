@@ -9,6 +9,7 @@ const socketio = require('socket.io');
 const passport = require('passport')
 const session = require('express-session')
 const cors = require('cors')
+const path = require('path')
 
 //set default port
 const port = process.env.PORT || 8080;
