@@ -29,7 +29,7 @@ router.get('/twitch', addSocketId, twitchAuth);
 router.get('/twitch/callback', twitchAuth, twitch)
 
 // Anything that doesn't match the above, send back index.html
-router.get('/*', (req, res) => {
+router.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/frontend/build/index.html'))
   })
 
