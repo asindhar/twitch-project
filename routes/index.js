@@ -21,7 +21,7 @@ const twitch = (req, res) => {
     io.in(req.session.socketId).emit('twitch', user)
 }
 
-router.get('/', (res, req) => {res.send("Aman")})
+
 // Route triggered by the React client
 router.get('/twitch', addSocketId, twitchAuth);
 // Route triggered by callbacks from twitch once 
