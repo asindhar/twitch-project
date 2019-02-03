@@ -1,0 +1,21 @@
+
+.loader:after {
+    content: " ";
+    display: block;
+    width: 46px;
+    height: 46px;
+    margin: auto;
+    margin-top: 20px !important;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    border-color: #6441A5 transparent;
+    animation: loader 1.2s linear infinite;
+  }
+  @keyframes loader {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

@@ -3,7 +3,6 @@ import io from 'socket.io-client';
 import FontAwesome from 'react-fontawesome';
 import './Login.css';
 import {API_URL} from '../config.js'
-import { Link } from 'react-router-dom'
 
 
 const socket = io(API_URL);
@@ -17,38 +16,22 @@ class Login extends Component {
     token: '',
     channel: '',
     disabled: '',
-    session: false
   }
 
   componentDidMount(){
-    console.log("Component mounted..")
-    // if(sessionStorage.sessionData){
-    //   let userData = JSON.parse(sessionStorage.userData);
-    //   console.log(userData)
-    //   this.setState({
-    //     user: userData,
-    //     token: userData.token,
-    //     authenticated: true
-    //   })
-    //   console.log(sessionStorage.userData.name)
-    // } else {
       socket.on(provider, userData => {
-        console.log("User data from Backend", userData);
+        //console.log("User data from Backend", userData);
         this.popup.close();
         this.setState({
           user: userData,
           token: userData.token,
           authenticated: true,
-          session: true
         })
-        window.sessionStorage.setItem("sessionData", true)
-        window.sessionStorage.setItem("userData", JSON.stringify(userData));
       });
-    //}
   }
 
+  //Method to disable login when popup is open
   checkPopup = () => {
-    console.log("checkpopUP..")
     const check = setInterval(() => {
       const { popup } = this
       if (!popup || popup.closed || popup.closed === undefined) {
@@ -58,12 +41,11 @@ class Login extends Component {
     }, 1000)
   }
 
-
+  //Open new window with default size
   openPopup = () => {
     const width = 600, height = 600
     const left = (window.innerWidth / 2) - (width / 2)
     const top = (window.innerHeight / 2) - (height / 2)
-    console.log(provider, socket, `${API_URL}/${provider}?socketId=${socket.id}`)
     const url = `${API_URL}/${provider}?socketId=${socket.id}`
 
     return window.open(url, '',       
@@ -73,56 +55,72 @@ class Login extends Component {
     )
   }
 
+  //Method to start authorization process
   startAuth = (e) => {
     if (!this.state.disabled) {
       e.preventDefault()
       this.popup = this.openPopup()
-      console.log("checking popup..")  
       this.checkPopup()
       this.setState({disabled: 'disabled'})
     }
   }
 
+  //Logout user
   closeCard = () => {
     this.setState({user: {}, authenticated: false})
-    sessionStorage.removeItem("sessionData");
-    sessionStorage.removeItem("userData");
   }
 
+  //Update state of favourite channel
   updateChannel = (e) => {
-    console.log(e.target.value);
     this.setState({ channel: e.target.value });
   }
 
+  //Form handler
+  submitForm = (e) => {
+    e.preventDefault();
+    const state = {channel: this.state.channel}
+    this.props.history.push('/stream', state);
+  }
   render() {
     const { authenticated, disabled, user, channel } = this.state;
     return (
       <div className={'wrapper'}>
+        <div className={'header'}>
+            <h2>
+              Stream Favourite Twitch Channel
+            </h2>
+        </div>
         {authenticated
-          ? <div>
+          ? <div className={'container'}> 
               <div className={'card'}>              
-                <img src={user.photo} alt={user.name} />
+                <img className={'profile-img'} src={user.photo} alt={user.name}/>
                 <FontAwesome
                   name={'times-circle'}
                   className={'close'}
                   onClick={this.closeCard}
                 />
                 <h4>{user.name}</h4>
-              </div>
-              <div>
-                <h3>Please enter your favourite channel</h3>
-                <input value={channel} onChange={(e) => this.updateChannel(e) }/> 
-                <Link to={
-                  {
-                    pathname: '/stream',
-                    state: {channel: channel}
-                  }
-                  }>
-                  Submit
-                </Link>
+                <div className={'input-div'}>
+                  <form onSubmit={this.submitForm} autoComplete='off'>
+                    <label>Please enter your favourite channel</label>
+                    <input required type='text' value={channel} onChange={(e) => this.updateChannel(e) }
+                            placeholder='ex: monstercat'/>
+                    <button className={'btn-submit'}>Submit</button>
+                  </form>
+                </div>
+                {/* <div className={'submit-box'}>
+                  <Link  className={'submit-link'} to={
+                    {
+                      pathname: '/stream',
+                      state: {channel: channel}
+                    }
+                    }>
+                    Submit
+                  </Link>
+                </div> */}
               </div>
             </div>
-          : <div className={'button-wrapper fadein-fast'}>
+          : <div className={'button-wrapper fadein-fast login'}>
               <button 
                 onClick={this.startAuth} 
                 className={`${provider} ${disabled} button`}
@@ -130,6 +128,7 @@ class Login extends Component {
                 <FontAwesome
                   name={provider}
                 />
+                <span className={'span-text'}>LOGIN</span>
               </button>
             </div>
         }

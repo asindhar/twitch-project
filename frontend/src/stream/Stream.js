@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import axios from'axios';
 import ChannelVOD from './ChannelVOD';
+import './Stream.css';
 
 class Stream extends Component {
     state = {
-        channel: 'monstercat',
+        channel: 'monstercat', //default channel to play
         loading: true,
         recentStreams: []
     }
     componentDidMount(){
         let favChannel = this.state.channel;
         if (this.props.location.state !== undefined) {
-            favChannel =  this.props.location.state.channel;
+            if(this.props.location.state.channel !== ''){
+                favChannel =  this.props.location.state.channel;
+            }
         }
         const script = document.createElement("script");
         script.src = 'https://embed.twitch.tv/embed/v1.js';
@@ -64,7 +67,7 @@ class Stream extends Component {
             <div>
                 <div id={targetID}></div>
                 {loading
-                ? "Fetching data..."
+                ? <div className={'loader'}></div>
                 : <ChannelVOD recentStreams={recentStreams}/>
                 }
             </div>
