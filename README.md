@@ -1,4 +1,4 @@
-# twitch-Stream-Channel
+# Twitch-Stream-Channel
 A simple app that authenticates the user with their twitch account to view live stream of their favourite channel. User can also post chat to the channel and view top 10 recent videos.
 
 App **version** 1.0  is live on https://fav-streamer-event-viewer.herokuapp.com/ 
@@ -44,7 +44,7 @@ TWITCH_CLIENT_SECRET=Your twitch client secret
 SESSION_SECRET='Any-session-secre-key'
 ```
 
-* You may want to change configurations in congi.js in root for server and config.js in frontend for client
+* You may want to change configurations in config.js(in root directory) for server and config.js(in frontend folder) for client
 
 * To start project on localhost
 ```
