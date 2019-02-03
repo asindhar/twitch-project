@@ -3,6 +3,10 @@ import axios from'axios';
 import ChannelVOD from './ChannelVOD';
 import './Stream.css';
 
+/*
+This component get required channel data for video, chat, VOD
+through api calls
+*/
 class Stream extends Component {
     state = {
         channel: 'monstercat', //default channel to play
@@ -17,8 +21,12 @@ class Stream extends Component {
             }
         }
         const script = document.createElement("script");
+        //script for embedding twitch video player and chat
         script.src = 'https://embed.twitch.tv/embed/v1.js';
         script.async = true;
+
+        //Get twitch id of input channel name
+        //Rquired for api to get recent videos
         axios.get('https://api.twitch.tv/helix/users',
                 {
                     params: {login: favChannel},
@@ -27,12 +35,13 @@ class Stream extends Component {
             .then( res => {
                 this.setState({channel: favChannel},
                     () => {
-                         script.addEventListener('load', () => {
-                                        new window.Twitch.Embed(this.props.targetID, { ...this.props, ...this.state });
-                                    });
-                                    document.body.appendChild(script);
+                        script.addEventListener('load', () => {
+                            new window.Twitch.Embed(this.props.targetID, { ...this.props, ...this.state });
+                            });
+                        document.body.appendChild(script);
                     });
                 const channelID = res.data.data[0].id;
+                //Get recent videos of the channel with id from previous api call
                 axios.get(`https://api.twitch.tv/kraken/channels/${channelID}/videos`,
                     {
                         //params: {'broadcast_type': 'archive'},
@@ -42,11 +51,10 @@ class Stream extends Component {
                                 }
                     })
                     .then( res => {
-                        //Get array of recent videos
-                        this.setState({recentStreams:res.data.videos, loading:false, channel: favChannel},
-                                        () => {
-                                           
-                                        });
+                        //Get array of recent videos from response
+                        //Set state
+                        //By default this api send 10 videos
+                        this.setState({recentStreams:res.data.videos, loading:false, channel: favChannel})
                     })
                     .catch( err => {    
                         console.log(err);
@@ -75,6 +83,7 @@ class Stream extends Component {
     }
 }
 
+// Default properties of stream
 Stream.defaultProps = {
     targetID: 'twitch-embed',
     width: '100%',

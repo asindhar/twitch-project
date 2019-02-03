@@ -8,6 +8,11 @@ import {API_URL} from '../config.js'
 const socket = io(API_URL);
 const provider = 'twitch';
 
+/*
+This component authenticates twitch account through server via socket.
+Then collect favourite channel through form
+*/
+
 class Login extends Component {
 
   state = {
@@ -19,6 +24,7 @@ class Login extends Component {
   }
 
   componentDidMount(){
+      //Socket connection 
       socket.on(provider, userData => {
         //console.log("User data from Backend", userData);
         this.popup.close();
@@ -31,6 +37,7 @@ class Login extends Component {
   }
 
   //Method to disable login when popup is open
+  //@memberof Login
   checkPopup = () => {
     const check = setInterval(() => {
       const { popup } = this
@@ -42,6 +49,7 @@ class Login extends Component {
   }
 
   //Open new window with default size
+  //@memberof Login
   openPopup = () => {
     const width = 600, height = 600
     const left = (window.innerWidth / 2) - (width / 2)
@@ -56,6 +64,7 @@ class Login extends Component {
   }
 
   //Method to start authorization process
+  //@memberof Login
   startAuth = (e) => {
     if (!this.state.disabled) {
       e.preventDefault()
@@ -66,6 +75,7 @@ class Login extends Component {
   }
 
   //Logout user
+  //@memberof Login
   closeCard = () => {
     this.setState({user: {}, authenticated: false})
   }
@@ -76,6 +86,7 @@ class Login extends Component {
   }
 
   //Form handler
+  //@memberof Login
   submitForm = (e) => {
     e.preventDefault();
     const state = {channel: this.state.channel}
@@ -108,16 +119,6 @@ class Login extends Component {
                     <button className={'btn-submit'}>Submit</button>
                   </form>
                 </div>
-                {/* <div className={'submit-box'}>
-                  <Link  className={'submit-link'} to={
-                    {
-                      pathname: '/stream',
-                      state: {channel: channel}
-                    }
-                    }>
-                    Submit
-                  </Link>
-                </div> */}
               </div>
             </div>
           : <div className={'button-wrapper fadein-fast login'}>

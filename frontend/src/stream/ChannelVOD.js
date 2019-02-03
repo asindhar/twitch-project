@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import FlexView from 'react-flexview';
 import './ChannelVOD.css';
 
+/*
+This component displays the tabs of recent 10 videos
+Helper component of Stream
+*/
 class ChannelVOD extends Component {
 
     // Function to slice the title string upto 28 char
@@ -10,10 +14,6 @@ class ChannelVOD extends Component {
         return(sliced+'...')
     }
 
-    showPlayer = (e) => {
-        e.preventDefault();
-        alert("Hiii")
-    }
     render() {
         const {recentStreams} = this.props;
         return(
@@ -22,8 +22,9 @@ class ChannelVOD extends Component {
                 {recentStreams.length > 0
                 ?<FlexView className={'flex-view'} wrap>
                 {recentStreams.map((stream, i) =>
+                    //Displaying video preview image(with link to twitch) and title
                     <section className={'card vod'} key={i}>
-                        <a href={stream.url} onClick={(e) => this.showPlayer}>
+                        <a href={stream.url}>
                             <img className={'vod-img'} src={stream.preview.medium} alt={stream.title} />
                         </a>
                         <h4 style={{height: '80px'}}>{this.shortString(stream.title)}</h4>
