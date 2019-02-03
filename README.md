@@ -90,10 +90,9 @@ https://fav-streamer-event-viewer.herokuapp.com/
 
 ## Questions on Scaling
 * How would you deploy the above on AWS? (ideally a rough architecture diagram will help)
-The app can be deployed on AWS EC2 instance. Docker can be used for consistentcy and testing the image on local and then deploying on AWS.
-Cient and server can be installed on same instance of EC2. Then, Nginx can be used as routed/middleware between outside traffic and Client/Server.
+    * The app can be deployed on AWS EC2 instance. Docker can be used for consistentcy and testing the image on local and then deploying on AWS. Cient and server can be installed on same instance of EC2. Then, Nginx can be used as routed/middleware between outside traffic and Client/Server.
 
 * Where do you see bottlenecks in your proposed architecture and how would you approach scaling this app starting from 100 reqs/day to 900MM reqs/day over 6 months?
-The app could be easily scaled on AWS by using Amazon Elastic Load Balancer (ELB)
+    * The app could be easily scaled on AWS by using Amazon Elastic Load Balancer (ELB)
 
 ![alt architecture](ArchitectureAWS.jpg?raw=true "ArchitectureAWS")
