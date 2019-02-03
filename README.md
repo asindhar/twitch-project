@@ -24,6 +24,7 @@ This app uses Oauth authentication for logging in users with their Twitch accoun
 ### Development Environment
 * The client side of project is created with create-react-app
 * Open terminal window 
+```
 $ git clone https://github.com/asindhar/twitch-project.git 
 $ cd twitch-project
 $ npm install package.json (To install node packages for server)
@@ -31,6 +32,7 @@ $ cd frontend
 $ npm install package.json (To install node packages for client)
 $ cd ..
 $ touch .env
+```
 
 * Open .env file in your favourite editor and add following:
 ```
@@ -45,12 +47,13 @@ SESSION_SECRET='Any-session-secre-key'
 * You may want to change configurations in congi.js in root for server and config.js in frontend for client
 
 * To start project on localhost
+```
 $ node server.js
 (Starts server and you will see in terminal: Server is running on port 8080 ...)
 *To start client side
 $ cd frontend
 $ npm start
-
+```
 
 ## Test
 * Pending
